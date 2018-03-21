@@ -1,6 +1,8 @@
 package br.edu.etec.lojainformatica;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -12,6 +14,10 @@ public class App extends JFrame{
 	private JMenuBar menuBar;
 	private JMenu menu;
 	private JMenuItem menuItem;
+	
+	TelaDeCadastro tlaCadCli = new TelaCadClientes();
+	TelaDeCadastro tlaCadHard = new TelaCadDeHardware();
+	TelaDeCadastro tlaCadVdas = new TelaCadDeVendas();
 	
 	public App(){	
 		this.setVisible(true);
@@ -25,12 +31,48 @@ public class App extends JFrame{
 	
 	private void configuraMenu(){
 		this.menuBar = new JMenuBar();
-		JMenu menuCli = new JMenu("Clientes");
-		JMenu menuHardware = new JMenu("Hardwares");
-		JMenu menuVendas = new JMenu("Vendas");
-		this.menuBar.add(menuCli);
-		this.menuBar.add(menuHardware);
-		this.menuBar.add(menuVendas);
+		JMenu menuCadastros = new JMenu("CADASTROS");
+
+		JMenuItem menuItemClientes = new JMenuItem("Clientes");
+		menuItemClientes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("menuClieActionPerformed...");
+				App.this.tlaCadHard.setVisible(false);
+				App.this.tlaCadVdas.setVisible(false);
+				App.this.tlaCadCli.setVisible(true);
+				App.this.getContentPane().add(App.this.tlaCadCli, BorderLayout.CENTER);
+				App.this.pack();
+			}
+		});
+		menuCadastros.add(menuItemClientes);
+
+		JMenuItem menuItemHardware = new JMenuItem("Hardware");
+		menuItemHardware.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				App.this.tlaCadCli.setVisible(false);
+				App.this.tlaCadVdas.setVisible(false);
+				App.this.tlaCadHard.setVisible(true);
+				App.this.getContentPane().add(App.this.tlaCadHard, BorderLayout.CENTER);
+				App.this.pack();
+			}
+		});
+
+		menuCadastros.add(menuItemHardware);
+
+		JMenuItem menuItemVenda = new JMenuItem("Vendas");
+		menuItemVenda.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				App.this.tlaCadCli.setVisible(false);
+				App.this.tlaCadHard.setVisible(false);
+				App.this.tlaCadVdas.setVisible(true);
+				App.this.getContentPane().add(App.this.tlaCadVdas, BorderLayout.CENTER);
+				App.this.pack();
+			}
+		});
+
+		menuCadastros.add(menuItemVenda);
+
+		this.menuBar.add(menuCadastros);
 		this.getContentPane().add(menuBar, BorderLayout.NORTH);
 	}
 	
